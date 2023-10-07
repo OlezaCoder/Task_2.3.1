@@ -11,12 +11,11 @@ import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
-public class UsersServiceImo {
-
+public class UsersServiceImp implements UserService {
     private final UsersRepository usersRepository;
 
     @Autowired
-    public UsersServiceImo(UsersRepository usersRepository) {
+    public UsersServiceImp(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 
@@ -28,5 +27,21 @@ public class UsersServiceImo {
         Optional<User> user = usersRepository.findById(id);
 
         return user.orElse(null);
+    }
+
+    @Transactional
+    public void save(User user) {
+        usersRepository.save(user);
+    }
+
+    @Transactional
+    public void update(int id, User updatedUser) {
+        updatedUser.setId(id);
+        usersRepository.save(updatedUser);
+    }
+
+    @Transactional
+    public void delete(int id) {
+        usersRepository.deleteById(id);
     }
 }
