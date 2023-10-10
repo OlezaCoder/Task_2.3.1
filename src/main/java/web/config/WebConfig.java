@@ -34,13 +34,13 @@ import java.util.Properties;
 public class WebConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
 
-    @Autowired
-    public WebConfig(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
+    private Environment env;
 
     @Autowired
-    private Environment env;
+    public WebConfig(ApplicationContext applicationContext, Environment env) {
+        this.env = env;
+        this.applicationContext = applicationContext;
+    }
 
     @Bean
     public DataSource getDataSource() {
@@ -60,7 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         Properties props=new Properties();
         props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-        props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+        props.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -83,6 +83,7 @@ public class WebConfig implements WebMvcConfigurer {
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/pages/");
         templateResolver.setSuffix(".html");
+        templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
     }
 
@@ -99,6 +100,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void configureViewResolvers(ViewResolverRegistry registry) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
+        resolver.setCharacterEncoding("UTF-8");
+
         registry.viewResolver(resolver);
     }
 }

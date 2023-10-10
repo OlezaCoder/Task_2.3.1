@@ -7,7 +7,15 @@
 <body>
 
     <div th:each="user : ${users}">
-        <a th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getName{}">user</a>
+        <a th:href="@{/users/showuser(id=${user.getId()})}" th:text="${user.getName()}">user</a>
+
+        <form th:method="DELETE" th:action="@{/users(id=${user.getId()})}" style="display: inline;">
+            <input type="submit" value="Delete"/>
+        </form>
     </div>
+
+    <br/>
+
+    <a href="/users/new">Create new user</a>
 </body>
 </html>
