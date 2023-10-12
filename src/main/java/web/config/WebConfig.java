@@ -61,6 +61,7 @@ public class WebConfig implements WebMvcConfigurer {
         Properties props=new Properties();
         props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         props.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.ddl-auto"));
 
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);

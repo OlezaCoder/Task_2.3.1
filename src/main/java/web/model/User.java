@@ -7,14 +7,13 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "name")
+
     private String name;
-    @Column(name = "lastName")
+
     private String lastName;
-    @Column(name = "age")
+
     private int age;
 
     public User() {}
